@@ -23,14 +23,17 @@ client.on("ready", () => {
 });
 
 client.on("message", async msg => {
-  if (msg.mentions.has(msg.guild.me, { ignoreEveryone: true })) {
+  if (msg.guild && msg.mentions.has(msg.guild.me, { ignoreEveryone: true })) {
     if (msg.content.includes("ping")) msg.reply("Pong!");
 
     if (["ouvre", "ouvrir", "open"].some(x => msg.content.includes(x))) {
+      console.log(new Date().toISOString(), "Gate opening");
       try {
         await openGate();
+        console.log(new Date().toISOString(), "Gate opened");
         msg.reply("Et voila !");
       } catch (error) {
+        console.log(new Date().toISOString(), "Gate failed to open");
         console.error(error);
         msg.reply("Heu... Pti probleme technique");
       }
