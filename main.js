@@ -8,15 +8,12 @@ const client = new Discord.Client();
 const GATEWAY_AUTH_HEADER = `Bearer ${process.env.GATEWAY_TOKEN}`;
 
 const openGate = () =>
-  got(
-    "https://broloc.mozilla-iot.org/things/http---wemos_d1_mini.local-things-remote/properties/on",
-    {
-      method: "PUT",
-      responseType: "json",
-      headers: { Authorization: GATEWAY_AUTH_HEADER },
-      json: { on: true }
-    }
-  );
+  got(`${process.env.GATEWAY_URL}${process.env.GATE_PROPERTY_ON_URI}`, {
+    method: "PUT",
+    responseType: "json",
+    headers: { Authorization: GATEWAY_AUTH_HEADER },
+    json: { on: true }
+  });
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
